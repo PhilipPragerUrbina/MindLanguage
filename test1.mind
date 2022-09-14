@@ -1,0 +1,17 @@
+function main : a   {
+c mul d
+}
+
+function mul : a b {
+b ++
+a ++
+b mule h
+}
+
+function mule : a b {
+b ++
+a ++
+
+}
+
+

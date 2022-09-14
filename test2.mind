@@ -1,0 +1,13 @@
+function add : a b {
+a ++
+b --
+b eat a
+a print
+b print
+c input
+while c [
+
+print c
+ ]
+}
+
