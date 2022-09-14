@@ -180,7 +180,13 @@ class EndWhile implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        String out = "";
+     String var = state.endLoop();
+     int idx = state.getVariableIndex(var);
+     out += state.goToIndex(idx);
+     out += "]";
+     return out;
+
     }
 
     @Override
@@ -214,7 +220,16 @@ class IncOrDec implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+
+        String out = "";
+        int idx = state.getVariableIndex(replace_values_a);
+        out += state.goToIndex(idx);
+        if(inc){
+            out+="+";
+        }else{
+            out+="-";
+        }
+        return out;
     }
 
     @Override
@@ -253,7 +268,12 @@ class Input implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        String out = "";
+        int idx = state.getVariableIndex(replace_values_a);
+        out += state.goToIndex(idx);
+        out+=",";
+
+        return out;
     }
 
     @Override
@@ -290,7 +310,12 @@ class Output implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        String out = "";
+        int idx = state.getVariableIndex(replace_values_a);
+        out += state.goToIndex(idx);
+        out+=".";
+
+        return out;
     }
 
     @Override
@@ -327,7 +352,12 @@ class While implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        String out = "";
+        state.registerLoop(replace_values_a);
+        int idx = state.getVariableIndex(replace_values_a);
+        out += state.goToIndex(idx);
+        out += "[";
+        return out;
     }
 
 

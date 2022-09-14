@@ -47,5 +47,11 @@ public class State {
     public void moveVariablePointer(int offset){
         new_var_pointer += offset;
     }
+    public String goToIndex(int idx){
+
+        String to_ret =  Expander.move(idx - getCurrentPointer());
+        current_pointer = idx;
+        return to_ret;
+    }
 
 }

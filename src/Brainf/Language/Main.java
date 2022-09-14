@@ -1,17 +1,15 @@
 package Brainf.Language;
 
 import Brainf.Language.Cranuim.CraniumRuntime;
+import Brainf.Language.Mind.Expander;
+import Brainf.Language.Mind.MindCompiler;
 import Brainf.Language.Mind.Parser;
 
 public class Main {
 
     public static void main(String[] args) {
-        try {
-            Parser parser = new Parser("test1.mind", "test2.mind");
-            parser.print();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
+        MindCompiler m = new MindCompiler("test1.mind");
 
 
        // CraniumRuntime interpreter = new CraniumRuntime(1000);

@@ -23,7 +23,7 @@ public class BrainFile {
     }
     //create file from location and name without extension
     public BrainFile(String location, String name){
-        this(location + "/" + name + ".bf");
+        this(location  + name + ".bf");
     }
 
     //write instructions
