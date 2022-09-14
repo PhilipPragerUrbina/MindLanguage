@@ -21,6 +21,14 @@ public class SourceFile {
         }
     }
 
+    public String getWhole(){
+        String out = "";
+        while (scanner.hasNextLine()){
+            out += scanner.nextLine();
+        }
+        return out;
+    }
+
     //get next line in file
     //returns null if at end of file
     public String nextLine(){

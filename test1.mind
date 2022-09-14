@@ -1,8 +1,18 @@
+function add : a b {
+while a [
+a --
+b ++
+]
+}
+
+
 function main : a   {
 a input
-c input
-c print
-a print
+b input
+a add b
+b print
 }
+
+
 
 

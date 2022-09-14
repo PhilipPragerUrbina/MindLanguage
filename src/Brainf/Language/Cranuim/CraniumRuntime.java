@@ -7,7 +7,7 @@ public class CraniumRuntime {
     private byte[] memory;
     private Deque<Integer> stack;
     private int cursor;
-
+    final boolean number = true; //wether to convert input and ouput into numbers rather than chars
     public CraniumRuntime(int size){
         memory = new byte[size];
         cursor = 0;
@@ -31,11 +31,20 @@ public class CraniumRuntime {
                     cursor ++;
                     break;
                 case '.':
-                    System.out.print((char)memory[cursor]);
+                    if(number){
+                        System.out.println((int)(char)memory[cursor]);
+                    }else{
+                        System.out.print((char)memory[cursor]);
+                    }
+
                     break;
                 case ',':
                     if(input_idx >= input.length()){return;}
-                    memory[cursor] = (byte)input.charAt(input_idx);
+                    if(number){
+                        memory[cursor] = (byte)Integer.parseInt(String.valueOf(input.charAt(input_idx)));
+                    }else {
+                        memory[cursor] = (byte)input.charAt(input_idx);
+                    }
                     input_idx++;
                     break;
                 case '+':
@@ -53,6 +62,7 @@ public class CraniumRuntime {
                     }else{
                         i = stack.peek();
                     }
+                    break;
                 default:
                     continue;
 
