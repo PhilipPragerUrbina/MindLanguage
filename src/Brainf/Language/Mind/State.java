@@ -1,11 +1,13 @@
 package Brainf.Language.Mind;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Stack;
 
 //store the state of the compiler
 public class State {
     private HashMap<String, Integer> variables = new HashMap<>(); //all variables and their position in memory
+    private Stack<Integer> free_memory = new Stack<>(); //memory that can be re-used
     private Stack<String> loop_variables = new Stack<>();    //variables being used in loops
 
     //pointers
@@ -25,13 +27,27 @@ public class State {
 
     //create a variable if it doesn't exist and return it's index
     public int getVariableIndex(String variable){
-        if(variables.containsKey(variable)){
+
+        if (variables.containsKey(variable)) {
             return variables.get(variable);
         }
-        //create new variable
-        variables.put(variable,new_var_pointer );
-        new_var_pointer++;
-        return new_var_pointer-1;
+        if(free_memory.empty()) {
+            //create new variable at end
+            variables.put(variable, new_var_pointer);
+            new_var_pointer++;
+            return new_var_pointer - 1;
+        }
+        //create new variable in free space
+        int idx = free_memory.pop();
+        variables.put(variable, idx);
+        return idx;
+
+    }
+
+    public void free(String variable){
+        int idx = getVariableIndex(variable);
+        variables.remove(variable);
+        free_memory.push(idx);
     }
 
     //movement functions

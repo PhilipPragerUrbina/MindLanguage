@@ -20,6 +20,7 @@ public class Expander {
     }
 
     public static String move(int offset){
+        //todo make this better
         String out = "";
        if(offset > 0){
            for (int i = 0; i < offset; i++) {
@@ -34,6 +35,7 @@ public class Expander {
     }
 
     public static String constant(char num){
+        //todo make this better
         String out = "";
         for (char i = 0; i < num ; i++) {
             out += "+";

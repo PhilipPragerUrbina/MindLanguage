@@ -106,7 +106,7 @@ class StartFunction implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        return "";
     }
 
     @Override
@@ -130,7 +130,7 @@ class EndFunction implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        return "";
     }
 
     @Override
@@ -156,7 +156,7 @@ class StartWhile implements Instruction{
 
     @Override
     public String expand(State state) {
-        return null;
+        return "";
     }
 
     @Override
@@ -241,7 +241,7 @@ class IncOrDec implements Instruction{
 
     @Override
     public String[] getOperands() {
-        return new String[0];
+        return new String[]{replace_values_a,null};
     }
 
     @Override
@@ -285,7 +285,7 @@ class Input implements Instruction{
 
     @Override
     public String[] getOperands() {
-        return new String[0];
+        return new String[]{replace_values_a,null};
     }
 
     @Override
@@ -327,7 +327,7 @@ class Output implements Instruction{
 
     @Override
     public String[] getOperands() {
-        return new String[0];
+        return new String[]{replace_values_a,null};
     }
 
     @Override
@@ -337,6 +337,48 @@ class Output implements Instruction{
                 '}';
     }
 }
+
+class Free implements Instruction{
+    String replace_values_a;
+    String param_a;
+    public Free(String param_a) {
+        this.param_a = param_a;
+        this.replace_values_a = param_a;
+    }
+
+    @Override
+    public boolean isFunctionPlaceholder() {
+        return false;
+    }
+
+    @Override
+    public String expand(State state) {
+       state.free(replace_values_a);
+
+        return "";
+    }
+
+    @Override
+    public void replaceVariable(String variable, String new_variable) {
+        if(param_a.equals(variable)){
+            replace_values_a = new_variable;
+        }
+    }
+
+    @Override
+    public String[] getOperands() {
+        return new String[]{replace_values_a,null};
+    }
+
+    @Override
+    public String toString() {
+        return "Free{" +
+                "param_a='" + replace_values_a + '\'' +
+                '}';
+    }
+}
+
+
 class While implements Instruction{
     String replace_values_a;
     String param_a;
@@ -370,7 +412,7 @@ class While implements Instruction{
 
     @Override
     public String[] getOperands() {
-        return new String[0];
+        return new String[]{replace_values_a,null};
     }
 
     @Override

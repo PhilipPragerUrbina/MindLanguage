@@ -1,18 +1,39 @@
+//set a to 0 and add to b
 function add : a b {
 while a [
-a --
-b ++
+    a --
+    b ++
 ]
 }
 
+//copy a to b leaving a the same
+function copy : a b {
+//set b to 0
+while b [
+    b --
+]
 
-function main : a   {
-a input
-b input
-a add b
-b print
+//copy a to b and c
+while a [
+    a --
+    b ++
+    c ++
+]
+//copy c to a
+while c [
+    a ++
+    c --
+]
+
+
 }
 
-
+function main : a   {
+d input
+b input
+d copy j
+j add b
+b print
+}
 
 

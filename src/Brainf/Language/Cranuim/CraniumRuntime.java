@@ -20,6 +20,7 @@ public class CraniumRuntime {
         cursor = 0;
     }
     public void interpret(String code, String input){
+        String[] in = input.split(",");
         int input_idx = 0;
         for (int i = 0; i < code.length(); i++) {
             char c = code.charAt(i);
@@ -39,11 +40,12 @@ public class CraniumRuntime {
 
                     break;
                 case ',':
-                    if(input_idx >= input.length()){return;}
+                    if(input_idx >= in.length){memory[cursor] = 0;
+                    break;}
                     if(number){
-                        memory[cursor] = (byte)Integer.parseInt(String.valueOf(input.charAt(input_idx)));
+                        memory[cursor] = (byte)Integer.parseInt(in[input_idx]);
                     }else {
-                        memory[cursor] = (byte)input.charAt(input_idx);
+                        memory[cursor] = (byte)in[input_idx].charAt(0);
                     }
                     input_idx++;
                     break;

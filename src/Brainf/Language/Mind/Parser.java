@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 //create set of instructions from code
 public class Parser {
+
     class Function{
         String param_a;
         String param_b;
@@ -28,7 +29,6 @@ public class Parser {
     }
     private HashMap<String, Function> functions = new HashMap<>();
     private ArrayList<Instruction> final_instructions = new ArrayList<>();
-
     //regex
     Pattern binary_function = Pattern.compile("function\\s(\\w+)\\s[:]\\s(\\w+)\\s(\\w+)\\s*\\{?\\s*\\Z"); //function name : a b     {
     Pattern unary_function = Pattern.compile("function\\s(\\w+)\\s[:]\\s(\\w+)\\s*\\{?\\s*\\Z");    //function name : a         {
@@ -48,6 +48,7 @@ public class Parser {
             processFile(file);
         }
         resolve();
+        optimizeMemory();
     }
 
     private void resolve() throws Exception {
@@ -59,13 +60,40 @@ public class Parser {
             throw new Exception("No main function!");
         }
     }
+    //optimize memory layout by freeing vars
+    private void optimizeMemory(){
+        HashMap<String,Integer> variables_last_seen = new HashMap<>();
+        for (int i = 0; i < final_instructions.size(); i++) {
+            Instruction in = final_instructions.get(i);
+            if(in.getOperands() != null && in.getOperands().length == 2){
+                if(in.getOperands()[0] != null){
+                    variables_last_seen.put(in.getOperands()[0],i);
+                }
+                if(in.getOperands()[1] != null){
+                    variables_last_seen.put(in.getOperands()[1],i);
+                }
+            }
+        }
+
+        for(Map.Entry<String,Integer> entry: variables_last_seen.entrySet()){
+            final_instructions.add(entry.getValue()+1,new Free(entry.getKey()));
+        }
+    }
+
+
     //recursively resolve
     private void resolve(Function function, String replace_a,String replace_b) throws Exception {
         for (Instruction in : function.instructions) {
             in.replaceVariable(function.param_a, replace_a);
             in.replaceVariable(function.param_b, replace_b);
             if(in.isFunctionPlaceholder()){
-                resolve(functions.get(in.expand(null)), in.getOperands()[0], in.getOperands()[1]);
+                if(functions.containsKey(in.expand(null))){
+                    resolve(functions.get(in.expand(null)), in.getOperands()[0], in.getOperands()[1]);
+
+                }else{
+                    throw new Exception("Function does not exist: " + in.expand(null));
+                }
+
             }else{
                 final_instructions.add(in);
             }
@@ -173,8 +201,7 @@ public class Parser {
             }
         }
 
-        String[] tokens = line.split("\\s+");
-
+        String[] tokens = line.trim().split("\\s+");
         if (tokens.length == 2){
             //unary
             switch (tokens[1]) {
