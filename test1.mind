@@ -33,6 +33,7 @@ d input
 b input
 d copy j
 j add b
+j print
 b print
 }
 

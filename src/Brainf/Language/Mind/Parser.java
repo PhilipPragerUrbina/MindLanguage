@@ -65,6 +65,7 @@ public class Parser {
         HashMap<String,Integer> variables_last_seen = new HashMap<>();
         for (int i = 0; i < final_instructions.size(); i++) {
             Instruction in = final_instructions.get(i);
+
             if(in.getOperands() != null && in.getOperands().length == 2){
                 if(in.getOperands()[0] != null){
                     variables_last_seen.put(in.getOperands()[0],i);
