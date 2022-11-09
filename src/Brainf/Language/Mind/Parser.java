@@ -62,6 +62,7 @@ public class Parser {
     }
     //optimize memory layout by freeing vars
     private void optimizeMemory(){
+        /* todo fix
         HashMap<String,Integer> variables_last_seen = new HashMap<>();
         for (int i = 0; i < final_instructions.size(); i++) {
             Instruction in = final_instructions.get(i);
@@ -74,11 +75,13 @@ public class Parser {
                     variables_last_seen.put(in.getOperands()[1],i);
                 }
             }
+
         }
 
         for(Map.Entry<String,Integer> entry: variables_last_seen.entrySet()){
             final_instructions.add(entry.getValue()+1,new Free(entry.getKey()));
         }
+        */
     }
 
 
